@@ -21,19 +21,24 @@ public class GuestApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GuestApplication.class, args);
 	}
+
 	@Bean
-	   public Docket productApi() {
-	      return new Docket(DocumentationType.SWAGGER_2).select().paths(PathSelectors.any())
-	         .apis(RequestHandlerSelectors.basePackage("com.hotelmanagement.guest.controller")).build().apiInfo(apiInfo());
-	   }
-	
+	public Docket productApi() {
+		return new Docket(DocumentationType.SWAGGER_2).select().paths(PathSelectors.any())
+				.apis(RequestHandlerSelectors.basePackage("com.hotelmanagement.guest.controller")).build()
+				.apiInfo(apiInfo());
+	}
+
 	@SuppressWarnings("deprecation")
-	private ApiInfo apiInfo() 
-	{
-		return new ApiInfoBuilder().title("Guest Module").description("this is one of the module for Hotel Management System").termsOfServiceUrl("http://godknows.com").contact("tulsisethiya25@gmail.com").license("My License").licenseUrl("Tulsi.sethiya.com").version("1.0").build();
-		}
-@Bean
-public RestTemplate restTemplate(){
-	return new RestTemplate();
-}
+	private ApiInfo apiInfo() {
+		return new ApiInfoBuilder().title("Guest Module")
+				.description("this is one of the module for Hotel Management System")
+				.termsOfServiceUrl("http://godknows.com").contact("tulsisethiya25@gmail.com").license("My License")
+				.licenseUrl("Tulsi.sethiya.com").version("1.0").build();
+	}
+
+	@Bean
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
+	}
 }

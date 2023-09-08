@@ -1,6 +1,5 @@
 package com.hotelmanagement.guest.controller;
-
-import java.io.Console;
+ 
 import java.util.Date;
 
 
@@ -33,7 +32,7 @@ public class ReservationController {
 		Room room1=restTemplate.getForObject("http://localhost:8082/room/getByRoomNumber/"+ roomNumber, Room.class);
 		String s=room1.getRoomStatus();
 			if(s.equalsIgnoreCase("Booked")) {  
-			return "Room Number "+reservation.getRoom().roomNumber +" is not vacant";
+			return "Room Number "+ roomNumber +" is not vacant";
 		}
 		else {
 			restTemplate.put("http://localhost:8082/room/updateRoomStatus/"+roomNumber+"/"+"Booked", Room.class);
