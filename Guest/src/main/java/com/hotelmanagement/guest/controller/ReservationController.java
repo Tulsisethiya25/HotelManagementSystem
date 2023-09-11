@@ -29,13 +29,13 @@ public class ReservationController {
 	
 	@PostMapping("/addReservation/{roomNumber}")
 	public String addReservation(@RequestBody Reservation reservation ,@PathVariable String roomNumber){
-		Room room1=restTemplate.getForObject("http://localhost:8082/room/getByRoomNumber/"+ roomNumber, Room.class);
+		Room room1=restTemplate.getForObject("http://Room-Service/room/getByRoomNumber/"+ roomNumber, Room.class);
 		String s=room1.getRoomStatus();
 			if(s.equalsIgnoreCase("Booked")) {  
 			return "Room Number "+ roomNumber +" is not vacant";
 		}
 		else {
-			restTemplate.put("http://localhost:8082/room/updateRoomStatus/"+roomNumber+"/"+"Booked", Room.class);
+			restTemplate.put("http://Room-Service/room/updateRoomStatus/"+roomNumber+"/"+"Booked", Room.class);
 			room1.setRoomStatus("Booked");
 			reservation.setRoom(room1);
 		}
