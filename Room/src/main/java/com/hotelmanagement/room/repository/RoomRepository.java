@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.hotelmanagement.room.entity.Room;
 @Repository
 public interface RoomRepository extends MongoRepository<Room ,String> {
-	
+	public Room findByRoomNumber(String number);
 	public List<Room> findByType(String type);
 	public List<Room> findByRoomStatus(String roomStatus);
 	

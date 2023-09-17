@@ -1,8 +1,8 @@
 package com.hotelmanagement.staff.entity;
 
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,13 +10,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "Staff")
+//@Document(collection = "Staff")
+@Entity
 public class Staff {
 	@Id
-	public String staffEmail;
-	public String name;
-	public String address;
-	public int salary;
-	public int age;
-	public String occupation;
+	private String staffEmail;
+	private String name;
+	private String address;
+	private int salary;
+	private int age;
+	private String occupation;
 }

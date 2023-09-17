@@ -2,6 +2,7 @@ package com.hotelmanagement.room.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +39,7 @@ public class RoomController {
 	}
 	
 	@PutMapping("/updateRoomStatus/{roomNumber}/{roomStatus}")
-	public String updateRoomStatus(@PathVariable String roomNumber,@PathVariable String roomStatus)
+	public String updateRoomStatus(@PathVariable String roomNumber,@PathVariable String roomStatus) throws InvalidRoomNumber
 	{
 		return roomService.updateRoomStatus(roomNumber, roomStatus);
 	}
@@ -51,7 +52,7 @@ public class RoomController {
 	@GetMapping("/getByRoomNumber/{roomNumber}")	
 	public Room getByRoomNumber(@PathVariable String roomNumber) {
 		return roomService.getByRoomNumber(roomNumber);
-	}
+		}
 	@GetMapping("/getAllRoomDetails")
 	public List<Room> getAllRoomDetails(){
 		return roomService.getAllRoomDetails();

@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hotelmanagement.staff.Service.StaffService;
 import com.hotelmanagement.staff.entity.Staff;
 import com.hotelmanagement.staff.exception.StaffNotFoundException;
+import com.hotelmanagement.staff.service.StaffService;
 
 @RestController
 @RequestMapping("/staff")

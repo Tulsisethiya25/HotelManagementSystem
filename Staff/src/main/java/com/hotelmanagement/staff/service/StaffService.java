@@ -1,4 +1,4 @@
-package com.hotelmanagement.staff.Service;
+package com.hotelmanagement.staff.service;
 
 import java.util.List;
 

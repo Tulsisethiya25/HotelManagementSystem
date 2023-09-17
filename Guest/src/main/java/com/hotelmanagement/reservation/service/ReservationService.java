@@ -1,13 +1,14 @@
-package com.hotelmanagement.guest.service;
+package com.hotelmanagement.reservation.service;
 
+
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.hotelmanagement.guest.entity.Reservation;
+import com.hotelmanagement.reservation.entity.Reservation;
 
 @Service
 public interface ReservationService {

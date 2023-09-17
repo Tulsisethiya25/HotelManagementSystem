@@ -1,8 +1,7 @@
-package com.hotelmanagement.guest.controller;
+package com.hotelmanagement.reservation.controller;
  
+import java.time.LocalDate;
 import java.util.Date;
-
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,32 +14,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import com.hotelmanagement.guest.entity.Reservation;
-import com.hotelmanagement.guest.entity.Room;
-import com.hotelmanagement.guest.service.ReservationService;
+import com.hotelmanagement.reservation.entity.Reservation;
+import com.hotelmanagement.reservation.entity.Room;
+import com.hotelmanagement.reservation.service.ReservationService;
 
 @RestController
-@RequestMapping("/guest")
+@RequestMapping("/reservation")
 public class ReservationController {
 	@Autowired
 	private ReservationService reservationService;
 	@Autowired
 	private RestTemplate restTemplate;
+	public static final String BOOKED="Booked";
 	
 	@PostMapping("/addReservation/{roomNumber}")
 	public String addReservation(@RequestBody Reservation reservation ,@PathVariable String roomNumber){
 		Room room1=restTemplate.getForObject("http://Room-Service/room/getByRoomNumber/"+ roomNumber, Room.class);
-		String s=room1.getRoomStatus();
-			if(s.equalsIgnoreCase("Booked")) {  
+		if(room1!=null) {
+		String s=room1.getRoomStatus();		
+		if(s.equalsIgnoreCase(BOOKED)) {  
 			return "Room Number "+ roomNumber +" is not vacant";
 		}
 		else {
-			restTemplate.put("http://Room-Service/room/updateRoomStatus/"+roomNumber+"/"+"Booked", Room.class);
-			room1.setRoomStatus("Booked");
+			restTemplate.put("http://Room-Service/room/updateRoomStatus/"+roomNumber+"/"+BOOKED, Room.class);
+			room1.setRoomStatus(BOOKED);
 			reservation.setRoom(room1);
 		}
+		}
 		reservationService.addReservation(reservation);
-		return "Room Number "+reservation.getRoom().roomNumber +" Booked Successfully";
+		return "Room Number "+reservation.getRoom().getRoomNumber() +" Booked Successfully";
 		}
 	
 	@GetMapping("/getReservation")
