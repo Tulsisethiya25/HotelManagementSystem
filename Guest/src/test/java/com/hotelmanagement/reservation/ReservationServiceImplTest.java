@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -32,47 +33,41 @@ class ReservationServiceImplTest {
 
 	@InjectMocks
 	ReservationServiceImpl reservationService;
+	private static Reservation r1;
 
 	@BeforeEach
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
+		Room r = new Room("104", "AC", 2, 1500, "vacant");
+//		Staff s=new Staff();
+		Date d = new Date(2023 - 9 - 14);
+		Date d1 = new Date(2023 - 9 - 16);
+		r1 = new Reservation(101, "Kripa", 9898989090L, "kripa@gmail.com", "Dhamnod", "Female", 2, 2, d, d1,
+				"checkedIn", 2, r);
+
 	}
 
 	@Test
 	void getReservationByEmailTest() {
-		Room r = new Room("104", "AC", 2, 1500, "vacant");
-		Date d = new Date(2023 - 9 - 14);
-		Date d1 = new Date(2023 - 9 - 16);
-		Reservation r1 = new Reservation(101, "Kripa", 9898989090L, "kripa@gmail.com", "Dhamnod", "Female", 2, 2, d, d1,
-				"checkedIn", 2, r);
 		when(reservationRepository.findByEmail("kripa@gmail.com")).thenReturn(r1);
-		reservationService.getReservationByEmail("kripa@gmail.com");
+		Reservation rev=reservationService.getReservationByEmail("kripa@gmail.com");
+		assertEquals("Kripa",rev.getGuestName());
 	}
 
-	@Test
-	void getReservationTest() {
-		Room r = new Room("104", "AC", 2, 1500, "vacant");
-		Date d = new Date(2023 - 9 - 14);
-		Date d1 = new Date(2023 - 9 - 16);
-		Reservation r1 = new Reservation(101, "Kripa", 9898989090L, "kripa@gmail.com", "Dhamnod", "Female", 2, 2, d, d1,
-				"checkedIn", 2, r);
-		List<Reservation> list = Arrays.asList(r1);
-		when(reservationRepository.findAll()).thenReturn(list);
-		assertEquals(1, list.size());
-	}
-	
-	
+//	@Test
+//	void getReservationTest() {
+//		List<Reservation> list = new ArrayList<>();
+//		list.add(r1);
+//		when(reservationRepository.findAll()).thenReturn(list);
+//		assertEquals(1, list.size());
+//	}
+
 	@Test
 	void updateReservationTest() {
-		Room r = new Room("104", "AC", 2, 1500, "vacant");
-		Date d = new Date(2023 - 9 - 14);
-	    Date d1 = new Date(2023 - 9 - 16);
-		Reservation r1 = new Reservation(101, "Kripa", 9898989090L, "kripa@gmail.com", "Dhamnod", "Female", 2, 2, d, d1,
-				"checkedIn", 2, r);
 		when(reservationRepository.findByEmail("kripa@gmail.com")).thenReturn(r1);
 		when(reservationRepository.findByEmail("kripa@gmail.com")).thenReturn(r1);
-		reservationService.getReservationByEmail("kripa@gmail.com");
-	}
-
+		Reservation rev=reservationService.getReservationByEmail("kripa@gmail.com");
+		assertEquals("Kripa",rev.getGuestName());
+		}
 
 }

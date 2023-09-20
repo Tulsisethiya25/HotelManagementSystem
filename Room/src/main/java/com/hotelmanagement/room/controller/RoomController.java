@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hotelmanagement.room.dto.RoomDto;
 import com.hotelmanagement.room.entity.Room;
 import com.hotelmanagement.room.exception.InvalidRoomNumber;
 import com.hotelmanagement.room.service.RoomService;
@@ -24,9 +26,15 @@ public class RoomController {
 	public RoomService roomService;
 	
 	@PostMapping("/addRoom")
-	public ResponseEntity<Room> addRoom(@RequestBody Room room){
-		return roomService.addRoom(room);
+	public ResponseEntity<String> addRoom(@RequestBody RoomDto roomdto){
+		try {
+	 roomService.addRoom(roomdto);
+	 return ResponseEntity.ok("Room details add successfully");
 	}
+		catch(Exception e) {
+			return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+			}
+		}
 
 	@GetMapping("/findByType/{type}")
 	public List<Room> findByType(@PathVariable String type){
@@ -34,12 +42,12 @@ public class RoomController {
 	}
 	
 	@PutMapping("/updateRoomDetail/{roomNumber}/{price}/{type}/{noOfPerson}")
-	public String updateRoom(@PathVariable String roomNumber,@PathVariable int price,@PathVariable String type,@PathVariable int noOfPerson) throws InvalidRoomNumber{
+	public String updateRoom(@PathVariable String roomNumber,@PathVariable int price,@PathVariable String type,@PathVariable int noOfPerson) {
 		return roomService.updateRoom(roomNumber, price, type, noOfPerson);
 	}
 	
 	@PutMapping("/updateRoomStatus/{roomNumber}/{roomStatus}")
-	public String updateRoomStatus(@PathVariable String roomNumber,@PathVariable String roomStatus) throws InvalidRoomNumber
+	public String updateRoomStatus(@PathVariable String roomNumber,@PathVariable String roomStatus)
 	{
 		return roomService.updateRoomStatus(roomNumber, roomStatus);
 	}

@@ -5,8 +5,6 @@ import java.util.Date;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,7 +24,6 @@ public class Reservation {
 	private String gender;
 	private int noOfChild;
 	private int noOfAdult;
-//	@JsonFormat(pattern="dd/MM/yyyy" ,shape=Shape.STRING)
 	private Date checkIn;
 	private Date checkOut;
 	private String status;
