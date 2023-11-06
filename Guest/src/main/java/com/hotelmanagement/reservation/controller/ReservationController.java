@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ import com.hotelmanagement.reservation.service.ReservationService;
 
 @RestController
 @RequestMapping("/reservation")
+@CrossOrigin(origins="http://localhost:3000")
 public class ReservationController {
 	@Autowired
 	private ReservationService reservationService;
@@ -35,6 +37,13 @@ public class ReservationController {
 	public List<Reservation> getReservation(){
     return reservationService.getReservation();
 	}
+	
+	@GetMapping("/getReservationByStatus/{status}")
+	public List<Reservation> getReservationByStatus(@PathVariable String status){
+    return reservationService.getReservationByStatus(status);
+	}
+	
+	 
 	@GetMapping("/getReservationByEmail/{email}")
 	public Reservation getReservationByEmail(@PathVariable String email){
 		return reservationService.getReservationByEmail(email);
@@ -45,4 +54,10 @@ public class ReservationController {
 	public String updateReservation(@PathVariable String email,@PathVariable Date checkIn ,@PathVariable Date checkOut) {
 	return reservationService.updateReservation(email, checkIn, checkOut)	;
 	}
+	
+	@PutMapping("/updateStatus/{email}/{roomNumber}/{status}")
+	public String updateStatus(@PathVariable String email,@PathVariable String roomNumber,@PathVariable String status) {
+	return reservationService.updateStatus(email,roomNumber,status);
+	}
+	
 	}

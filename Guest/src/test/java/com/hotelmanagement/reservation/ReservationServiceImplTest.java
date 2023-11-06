@@ -1,6 +1,7 @@
 package com.hotelmanagement.reservation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import static org.mockito.Mockito.when;
 
 import java.lang.reflect.Array;
@@ -42,7 +43,7 @@ class ReservationServiceImplTest {
 //		Staff s=new Staff();
 		Date d = new Date(2023 - 9 - 14);
 		Date d1 = new Date(2023 - 9 - 16);
-		r1 = new Reservation(101, "Kripa", 9898989090L, "kripa@gmail.com", "Dhamnod", "Female", 2, 2, d, d1,
+	r1 = new Reservation( "kripa@gmail.com","Kripa", 9898989090L, "Dhamnod", "Female", 2, 2, d, d1,
 				"checkedIn", 2, r);
 
 	}

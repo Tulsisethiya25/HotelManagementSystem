@@ -24,12 +24,11 @@ public class ReservationServiceImpl implements ReservationService {
 	private ReservationRepository reservationRepository;
 	@Autowired
 	private RestTemplate restTemplate;
-	public static final String BOOKED="Booked";
-	
+	public static final String BOOKED = "Booked";
 
-	public String addReservation(ReservationDto reservationdto ,String roomNumber) {
-		Reservation reservation=new Reservation();
-		reservation.setGuestId(reservationdto.getGuestId());
+	public String addReservation(ReservationDto reservationdto, String roomNumber) {
+		Reservation reservation = new Reservation();
+//		reservation.setGuestId(reservationdto.getGuestId());
 		reservation.setGuestName(reservationdto.getGuestName());
 		reservation.setCheckIn(reservationdto.getCheckIn());
 		reservation.setCheckOut(reservationdto.getCheckOut());
@@ -41,22 +40,21 @@ public class ReservationServiceImpl implements ReservationService {
 		reservation.setNoOfChild(reservationdto.getNoOfChild());
 		reservation.setNoOfNight(reservationdto.getNoOfNight());
 		reservation.setStatus(reservationdto.getStatus());
-		Room room1=restTemplate.getForObject("http://Room-Service/room/getByRoomNumber/"+ roomNumber, Room.class);
-		if(room1!=null) {
-		String s=room1.getRoomStatus();		
-		if(s.equalsIgnoreCase(BOOKED)) {  
-			return "Room Number "+ roomNumber +" is not vacant";
-		}
-		else {
-			restTemplate.put("http://Room-Service/room/updateRoomStatus/"+roomNumber+"/"+BOOKED, Room.class);
-			room1.setRoomStatus(BOOKED);
-			reservation.setRoom(room1);
-		}
+		Room room1 = restTemplate.getForObject("http://Room-Service/room/getByRoomNumber/" + roomNumber, Room.class);
+		if (room1 != null) {
+			String s = room1.getRoomStatus();
+			if (s.equalsIgnoreCase(BOOKED)) {
+				return "Room Number " + roomNumber + " is not vacant";
+			} else {
+				restTemplate.put("http://Room-Service/room/updateRoomStatus/" + roomNumber + "/" + BOOKED, Room.class);
+				room1.setRoomStatus(BOOKED);
+				reservation.setRoom(room1);
+			}
 		}
 		reservationRepository.save(reservation);
 		log.info("Reservation Booked Successfully");
-		return "Room Number "+reservation.getRoom().getRoomNumber() +" Booked Successfully";
-		}
+		return "Room Number " + reservation.getRoom().getRoomNumber() + " Booked Successfully";
+	}
 
 	public List<Reservation> getReservation() {
 		log.info("Getting List Of All Reservation");
@@ -72,22 +70,49 @@ public class ReservationServiceImpl implements ReservationService {
 			log.error("Email Id not Exist");
 			throw new ReservationNotFoundException("Please enter valid Guest Email Id");
 		}
-		}
+	}
 
-	public String updateReservation(String email, Date checkIn,Date checkOut ) throws ReservationNotFoundException {
+	public String updateReservation(String email, Date checkIn, Date checkOut) throws ReservationNotFoundException {
 		Reservation rev = reservationRepository.findByEmail(email);
-		
+
 		if (rev != null) {
 			rev.setCheckIn(checkIn);
 			rev.setCheckOut(checkOut);
 			reservationRepository.save(rev);
-			log.info("Update Reservation Detail Success sfully");
-			return "Update Reservation Detail Success sfully";
+			log.info("Update Reservation Detail Successfully");
+			return "Update Reservation Detail Successfully";
 
 		} else {
 			log.error("Email Id does not Exist");
 			throw new ReservationNotFoundException("Please enter valid Guest Email Id");
 		}
+	}
+
+	@Override
+	public String updateStatus(String email,String roomNumber, String status) {
+		Reservation rev = reservationRepository.findByEmail(email);
+		
+		if (rev != null) {
+			Room room1 = restTemplate.getForObject("http://Room-Service/room/getByRoomNumber/" + roomNumber, Room.class);
+			
+			if (room1 != null) {
+					restTemplate.put("http://Room-Service/room/updateRoomStatus/" + roomNumber + "/" + "vacant", Room.class);
+			}
+			rev.setStatus(status);
+			reservationRepository.save(rev);
+			log.info("Update Reservation Detail Successfully");
+			return "Update Reservation Detail Successfully";
+
+		} else {
+			log.error("Email Id does not Exist");
+			throw new ReservationNotFoundException("Please enter valid Guest Email Id");
 		}
+	}
+
+	@Override
+	public List<Reservation> getReservationByStatus(String status) {
+		log.info("Getting List Of Reservation By Status");
+		return reservationRepository.findByStatus(status);
+	}
 
 }

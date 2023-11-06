@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 	
-	
-	
-	@ExceptionHandler
+	@ExceptionHandler(InvalidRoomNumber.class)
 	public ResponseEntity<ErrorObject> handleInvalidRoomNumberException (InvalidRoomNumber ex) {
 		ErrorObject eObject = new ErrorObject();
 		eObject.setStatus(HttpStatus.NO_CONTENT.value());

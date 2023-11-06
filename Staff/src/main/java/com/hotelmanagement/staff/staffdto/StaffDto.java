@@ -1,26 +1,19 @@
-package com.hotelmanagement.staff.entity;
+package com.hotelmanagement.staff.staffdto;
 
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-//@Document(collection = "Staff")
-@Entity
-public class Staff {
-	@Id
+@AllArgsConstructor
+public class StaffDto {
 	private String staffEmail;
 	private String name;
 	private String address;
 	private int salary;
 	private int age;
 	private String occupation;
-//	private StaffType staffType;
 	private String password;
 	private String status;
 }

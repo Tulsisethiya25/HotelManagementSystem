@@ -13,8 +13,9 @@ import com.hotelmanagement.reservation.entity.Reservation;
 public interface ReservationService {
 	public String addReservation(ReservationDto reservationdto,String number);
 	public List<Reservation> getReservation();
+	public List<Reservation> getReservationByStatus(String status);
 	public Reservation getReservationByEmail(String email);
 	public String updateReservation(String email,Date checkIn,Date checkOut);
-		
+	public String updateStatus(String email,String roomNumber,String status);
 	
 }

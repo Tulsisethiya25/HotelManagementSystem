@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReservationDto {
-	private int guestId;
+	
 	private String guestName;
 	private Long mobileNumber;
 	private String email;
@@ -23,6 +23,6 @@ public class ReservationDto {
 	private Date checkOut;
 	private String status;
 	private int noOfNight;
-	private Room room;
+	
 	
 }

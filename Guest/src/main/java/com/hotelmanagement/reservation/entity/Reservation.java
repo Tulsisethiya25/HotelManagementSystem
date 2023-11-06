@@ -16,10 +16,11 @@ import lombok.NoArgsConstructor;
 @Document(collection="Reservation")
 public class Reservation {
 	@MongoId
-	private int guestId;
+	private String email;
+//	private int guestId;
 	private String guestName;
 	private Long mobileNumber;
-	private String email;
+//	private String email;
 	private String guestAddress;
 	private String gender;
 	private int noOfChild;
@@ -34,7 +35,7 @@ public class Reservation {
 	
 		@Override
 		public String toString() {
-			return "Reservation [guestId=" + guestId + ", guestName=" + guestName + ", mobileNumber=" + mobileNumber
+			return "Reservation [guestName=" + guestName + ", mobileNumber=" + mobileNumber
 					+ ", email=" + email + ", guestAddress=" + guestAddress + ", gender=" + gender + ", noOfChild="
 					+ noOfChild + ", noOfAdult=" + noOfAdult + ", checkIn=" + checkIn + ", checkOut=" + checkOut
 					+ ", status=" + status + ", noOfNight=" + noOfNight + "]";

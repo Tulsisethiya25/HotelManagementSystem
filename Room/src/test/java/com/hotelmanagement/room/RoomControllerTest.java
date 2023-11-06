@@ -105,8 +105,7 @@ class RoomControllerTest {
 		when(roomService.getByRoomNumber("123")).thenReturn(room);
 		Room r=roomController.getByRoomNumber("123");
 		assertEquals(700,r.getPrice());
-	    
-		
+	   
 		}
 	@Test
 	void  getAllRoomDetails(){

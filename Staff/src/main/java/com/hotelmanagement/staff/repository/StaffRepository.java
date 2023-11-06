@@ -9,6 +9,8 @@ import com.hotelmanagement.staff.entity.Staff;
 @Repository
 public interface StaffRepository extends JpaRepository<Staff, String> {
 	public Staff findByStaffEmail(String staffEmail);
+	public List<Staff>findByStatus(String staffstatus);
+	public List<Staff> findByStatusAndOccupation(String status,String occupation);
 	public List<Staff> findAll();
 	
 }
